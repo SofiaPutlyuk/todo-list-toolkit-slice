@@ -8,6 +8,8 @@ flex-wrap:wrap;
 width:600px;
 height:auto;
 gap:20px;
+height:auto;
+padding-bottom:30px;
 `
 const ListItem = styled.li`
 display:flex;

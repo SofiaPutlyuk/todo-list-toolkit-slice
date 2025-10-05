@@ -63,7 +63,7 @@ export const TaskForm = () => {
     const [text , setText] = useState("")
     const [isDone , setIsDone] = useState(false)
     const dispatch = useDispatch()
-    const tasks = useSelector(state => state.tasks)
+    const tasks = useSelector(state => state.tasks.tasks)
     useEffect(() => {
      localStorage.setItem("tasks" , JSON.stringify(tasks))
     }, [tasks])
