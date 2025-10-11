@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { addTask } from "../../redux-toolkit-slice/tasksSlice"
+import { addTask, filterTask } from "../../redux-toolkit-slice/tasksSlice"
 import { useDispatch } from "react-redux"
 import { MdAddTask } from "react-icons/md";
 import { BiTask } from "react-icons/bi";
@@ -9,7 +9,7 @@ import { TaskListSlice } from "./TaskListSlice";
 import { useEffect } from "react";
 const MainWrapper = styled.div`
     width:800px;
-    height:900px;
+    height:auto;
     border-radius:15px;
     background:linear-gradient(#1cf332 , #f34b1c , #8b1cf3 , #e5f31c);
     margin:auto;
@@ -55,27 +55,44 @@ background: linear-gradient(90deg, #6600ff, #ee09c4);
 border:none;
 border-radius:13px;
 `
+const FilterInput = styled.input`
+width:200px;
+height:30px;
+border:none;
+border-radius:8px;
+
+`
 export const TaskFormSlice = () => {
     const tasks = useSelector(state => state.tasks.tasks)
-      useEffect(() => {
+    const filter = useSelector((state) => state.tasks.filter);
+
+    const filteredTasks = tasks.filter((task) =>
+        task.text.toLowerCase().includes(filter)
+    );
+
+    useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks))
-    } , [tasks])
+    }, [tasks])
     const dispatch = useDispatch()
     return (
         <MainWrapper>
             <WrapperForm onSubmit={(e) => {
                 e.preventDefault()
                 const text = e.target.elements.text.value
-                dispatch(addTask({ id:nanoid(), text, isDone: false }))
+                dispatch(addTask({ id: nanoid(), text, isDone: false }))
             }}>
                 <TitleForm>Add Task</TitleForm>
                 <label>
                     <MdAddTask style={{ position: "relative", left: 20 }} />
                     <WrapperInput type="text" name="text" placeholder="Add Task" />
                 </label>
+                <label>
+                    Filter:
+                    <FilterInput type="text" placeholder="Filter" name="filter" onChange={(e) => dispatch(filterTask(e.target.value))} />
+                </label>
                 <ButtonAdd><BiTask /> Add Task</ButtonAdd>
             </WrapperForm>
-            <TaskListSlice tasks={tasks} />
+            <TaskListSlice tasks={filteredTasks} />
         </MainWrapper>
     )
 }

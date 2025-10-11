@@ -21,3 +21,9 @@ export const editTask = (id , changes) => ({
         id , changes
     }
 })
+export const filterTask = (filter) => ({
+    type:"tasks/filterTask",
+    payload: {
+        filter
+    }
+})
