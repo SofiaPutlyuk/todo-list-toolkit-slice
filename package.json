@@ -1,7 +1,7 @@
 {
   "name": "todo-list",
   "version": "0.1.0",
-  "homepage": "https://sofiaputlyuk.github.io/todo-list",
+  "homepage": "https://sofiaputlyuk.github.io/todo-list-toolkit-slice",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.0",
