@@ -32,7 +32,8 @@ const tasksSlice = createSlice({
     initialState:{
         isLoading:false,
         error:null,
-        tasks:[]
+        tasks:[],
+        filter:""
     },
     extraReducers: (builder) => {
         builder
@@ -63,7 +64,7 @@ const tasksSlice = createSlice({
             }
         })
         .addCase(filterTask.fulfilled , (state , action) => {
-            state.tasks = state.tasks.filter(task => task.text.toLowerCase().includes(action.payload.toLowerCase()))
+            state.filter = action.payload
         })
         
     }

@@ -4,9 +4,10 @@ import { getTasks ,  filterTask} from "../../redux-toolkit-slice-async/tasksSlic
 import { nanoid } from "nanoid"
 import { TaskListSliceAsync } from "./TaskListSliceAsync"
 import styled from "styled-components"
-import { useEffect , useState} from "react"
+import { useEffect} from "react"
 import { IoFilterOutline } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
+import { selectTask , selecteFilterTask } from "./selectors"
 const Form = styled.form`
 width:500px;
 height:auto;
@@ -49,14 +50,12 @@ margin-top:20px;
 `
 
 export const TaskFormSliceAsync = () => {
-    const [filter , setFilter] =useState("")
-    const task = useSelector(state => state.tasks.tasks)
+    const task = useSelector(selectTask)
     const dispatch = useDispatch()
-    console.log(task)
     useEffect(() => {
      dispatch(getTasks())
     } , [dispatch])
-   const filteredTask = task.filter(t => (t.text || t.task || "").toLowerCase().includes(filter.toLowerCase()))
+   const filteredTask = useSelector(selecteFilterTask)
     return (
         <>
         <Form onSubmit={(e) => {
